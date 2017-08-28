@@ -1,0 +1,8 @@
+name: CombatTag
+version: 0.2
+description: Plugin d'antiDecoCombat
+author: [Amosar,Draazen]
+ 
+main: com.trafalcraft.combatTag.Main
+
+commands:
