@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="tr-CombatTag:jar">
+    <output-path>$PROJECT_DIR$/../../test/Spigot/plugins</output-path>
+    <root id="archive" name="tr-CombatTag.jar">
+      <element id="module-output" name="tr-CombatTag" />
+      <element id="file-copy" path="$PROJECT_DIR$/tr-CombatTag/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/tr-CombatTag/config.yml" />
+    </root>
+  </artifact>
+</component>

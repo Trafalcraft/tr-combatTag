@@ -1,0 +1,12 @@
+version: 0.1
+Msg:
+  prefix: "§f[§5CombatTag§f]>§5 "
+  no_permission: "§4ERROR §9§l> §r§bYou don't have permission to do that!"
+  command_use: "§9[§4CombatTag§9]> §r§cCommand use: §6$command"
+  player_enter_in_fight: "§4You enter in a fight, don't leave the server."
+  player_no_longer_in_fight: "§4You are no longer in fight."
+  player_leave_fight_broadcast: "§4$player have leave a fight !"
+  bossBar_text: "You are in fight : $timer s left!"
+Settings:
+  use_boss_bar: true
+  time_for_fight_in_second: 15
