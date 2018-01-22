@@ -1,5 +1,5 @@
 name: tr-CombatTag
-version: 0.3
+version: 1.0
 description: Plugin d'antiDecoCombat
 author: [Amosar,Draazen]
 softdepend: [WorldGuard]
