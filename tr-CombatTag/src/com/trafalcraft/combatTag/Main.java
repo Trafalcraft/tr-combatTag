@@ -1,6 +1,7 @@
 package com.trafalcraft.combatTag;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.trafalcraft.combatTag.object.PlayerTag;
 import com.trafalcraft.combatTag.object.PlayerTagController;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,9 +31,23 @@ public class Main extends JavaPlugin {
 
                 useBossBar = plugin.getConfig().getBoolean("Settings.use_boss_bar");
                 timeForFight = plugin.getConfig().getInt("Settings.time_for_fight_in_second");
+
+
+
+                try {
+                        Class.forName("org.bukkit.boss.BossBar");
+                } catch (ClassNotFoundException e) {
+                        this.getLogger().info("The BossBar need Spigot 1.9 or more, you are in "
+                                +Bukkit.getBukkitVersion());
+                        this.getLogger().info("BossBar feature disable");
+                        useBossBar = false;
+                }
         }
 
         public void onDisable() {
+                for (PlayerTag playerTag : ptc.getAll()) {
+                        playerTag.stopTask();
+                }
 
         }
 
