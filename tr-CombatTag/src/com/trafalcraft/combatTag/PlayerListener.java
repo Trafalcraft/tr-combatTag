@@ -17,39 +17,56 @@ public class PlayerListener implements Listener {
         public void onPlayerHit(EntityDamageByEntityEvent e) {
                 if (e.getEntity().getType() == EntityType.PLAYER) {
                         Player p = (Player) e.getEntity();
-                        Player damager = null;
+                        LivingEntity damager = null;
                         if (e.getDamager().getType() == EntityType.PLAYER) {
-
                                 damager = (Player) e.getDamager();
-                        } else if (e.getDamager() instanceof Arrow) {
-                                ProjectileSource shooter = ((Arrow) e.getDamager()).getShooter();
-                                if (shooter instanceof Player) {
-                                        damager = (Player) shooter;
-                                }
-                        } else if (e.getDamager() instanceof SplashPotion) {
-                                ProjectileSource shooter = ((SplashPotion) e.getDamager()).getShooter();
-                                if (shooter instanceof Player) {
-                                        damager = (Player) shooter;
-                                }
                         } else if (e.getDamager() instanceof AreaEffectCloud) {
                                 ProjectileSource shooter = ((AreaEffectCloud) e.getDamager()).getSource();
-                                if (shooter instanceof Player) {
-                                        damager = (Player) shooter;
+                                damager = getLivingEntity(shooter);
+                        } else if (e.getDamager() instanceof Projectile) {
+                                ProjectileSource shooter = ((Projectile) e.getDamager()).getShooter();
+                                damager = getLivingEntity(shooter);
+                        }else if(e.getDamager() instanceof LivingEntity){
+                                if(Main.isWorkOnMobDamage()){
+                                        damager = (LivingEntity) e.getDamager();
                                 }
                         }
                         if (damager != null) {
-                                if (checkNoPvpRegion(p))
-                                        return;
-                                if (checkNoPvpRegion(damager))
-                                        return;
+                                if(damager instanceof Player){
+                                        if (checkNoPvpRegion(p))
+                                                return;
+                                        if (checkNoPvpRegion((Player) damager))
+                                                return;
+                                        updatePtc((Player) damager);
+
+                                }else{
+                                        if(checkNoMobDamageRegion(p)){
+                                                return;
+                                        }
+                                }
                                 updatePtc(p);
-                                updatePtc(damager);
                         }
                 }
         }
 
+        private LivingEntity getLivingEntity(ProjectileSource shooter) {
+                LivingEntity damager = null;
+                if (shooter instanceof Player) {
+                        damager = (Player) shooter;
+                }else if(shooter instanceof LivingEntity){
+                        if(Main.isWorkOnMobDamage()){
+                                damager = (LivingEntity) shooter;
+                        }
+                }
+                return damager;
+        }
+
         private boolean checkNoPvpRegion(Player p) {
                 return Main.hasWorldGuard() && WorldGuardLink.pvpNotAllowed(p);
+        }
+
+        private boolean checkNoMobDamageRegion(Player p) {
+                return Main.hasWorldGuard() && WorldGuardLink.mobDamageNotAllowed(p);
         }
 
         private void updatePtc(Player p) {

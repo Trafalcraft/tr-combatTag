@@ -36,15 +36,6 @@ public class PlayerTag {
                         if (Main.getPtc().contains(player)) {
                                 if (timer == 0) {
                                         Main.getPtc().removePlayer(player);
-                                        Player p = Bukkit.getServer().getPlayer(player);
-                                        if (p != null) {
-                                                if (Main.canUseBossBar()) {
-                                                        bossBar.removePlayer(p);
-                                                }
-                                                p.sendMessage(
-                                                        Msg.PREFIX + Msg.PLAYER_NO_LONGER_IN_FIGHT.toString());
-                                        }
-                                        stopTask();
                                 } else {
                                         if (Main.canUseBossBar()) {
                                                 bossBar.setTitle(Msg.BOSS_BAR_TEXT.toString()
@@ -58,7 +49,7 @@ public class PlayerTag {
         }
 
         public void updateTask() {
-                timer = 15;
+                timer = baseTimer;
         }
 
         public boolean taskRun() {
@@ -67,11 +58,13 @@ public class PlayerTag {
 
         public void stopTask() {
                 Player p = Bukkit.getServer().getPlayer(player);
-                if (Main.canUseBossBar()) {
-                        bossBar.removePlayer(p);
+                if(p != null) {
+                        if (Main.canUseBossBar()) {
+                                bossBar.removePlayer(p);
+                        }
+                        p.sendMessage(
+                                Msg.PREFIX + Msg.PLAYER_NO_LONGER_IN_FIGHT.toString());
                 }
-                p.sendMessage(
-                        Msg.PREFIX + Msg.PLAYER_NO_LONGER_IN_FIGHT.toString());
                 Bukkit.getScheduler().cancelTask(task);
                 taskRun = false;
         }
