@@ -10,3 +10,4 @@ Msg:
 Settings:
   use_boss_bar: true
   time_for_fight_in_second: 15
+  work_on_mob_damage: true

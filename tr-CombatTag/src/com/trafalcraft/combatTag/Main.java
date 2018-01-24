@@ -15,6 +15,7 @@ public class Main extends JavaPlugin {
         private static JavaPlugin plugin;
         private static boolean worldGuard;
         private static boolean useBossBar;
+        private static boolean workOnMobDamage;
 
         private static int timeForFight;
 
@@ -29,10 +30,16 @@ public class Main extends JavaPlugin {
                 plugin.saveDefaultConfig();
                 plugin.reloadConfig();
 
+                if(plugin.getConfig().getString("version").equals("0.1")){
+                        plugin.getConfig().set("version", 0.2);
+                        plugin.getConfig().set("Settings.work_on_mob_damage",false);
+                        plugin.saveConfig();
+                }
+
                 useBossBar = plugin.getConfig().getBoolean("Settings.use_boss_bar");
                 timeForFight = plugin.getConfig().getInt("Settings.time_for_fight_in_second");
 
-
+                workOnMobDamage = Main.getPlugin().getConfig().getBoolean("Settings.work_on_mob_damage");
 
                 try {
                         Class.forName("org.bukkit.boss.BossBar");
@@ -84,5 +91,13 @@ public class Main extends JavaPlugin {
 
         public static int getTimeForFight() {
                 return timeForFight;
+        }
+
+        public static void setWorkOnMobDamage(boolean value){
+                workOnMobDamage = value;
+        }
+
+        public static boolean isWorkOnMobDamage(){
+                return workOnMobDamage;
         }
 }

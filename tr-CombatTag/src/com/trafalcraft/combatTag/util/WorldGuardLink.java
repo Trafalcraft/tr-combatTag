@@ -16,4 +16,11 @@ public class WorldGuardLink {
                         .getApplicableRegions(p.getLocation());
                 return !set.testState(lp, DefaultFlag.PVP);
         }
+
+        public static boolean mobDamageNotAllowed(Player p) {
+                LocalPlayer lp = Objects.requireNonNull(Main.getWorldGuard()).wrapPlayer(p);
+                ApplicableRegionSet set = Objects.requireNonNull(Main.getWorldGuard()).getRegionManager(p.getWorld())
+                        .getApplicableRegions(p.getLocation());
+                return !set.testState(lp, DefaultFlag.MOB_DAMAGE);
+        }
 }
